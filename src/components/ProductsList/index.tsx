@@ -4,8 +4,8 @@ import { List, ListContainer, Title } from './styles'
 
 export type Props = {
   title: string
-  background: 'gray' | 'black'
   games: Game[]
+  background: 'gray' | 'black'
 }
 
 const ProductList = ({ title, background, games }: Props) => (
