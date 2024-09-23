@@ -38,15 +38,19 @@ export const ListItems = styled.li`
   }
 `
 export const Modal = styled.div`
+  display: none;
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
   position: fixed;
   z-index: 1;
-  display: flex;
   align-items: center;
   justify-content: center;
+
+  &.visivel {
+    display: flex;
+  }
 
   .overlay {
     position: absolute;
@@ -72,7 +76,12 @@ export const ModalContent = styled.div`
       font-weight: bold;
     }
   }
-  img {
+  img,
+  iframe {
     max-width: 100%;
+  }
+  iframe {
+    width: 100%;
+    height: 480px;
   }
 `
