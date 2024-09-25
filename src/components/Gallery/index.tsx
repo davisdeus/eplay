@@ -1,3 +1,7 @@
+import { useState } from 'react'
+
+import { GalleryItem } from '../../pages/Home'
+
 import Section from '../Section'
 import { Action, Item, ListItems, Modal, ModalContent } from './styles'
 
@@ -6,15 +10,7 @@ import zoom from '../../assets/images/zoom.png'
 
 import residentEvil from '../../assets/images/Residente6.png'
 import hogwarts from '../../assets/images/fundo_hogwarts.png'
-import streetFighter from '../../assets/images/StreetFighter.jpg'
 import close from '../../assets/images/close.png'
-import { useState } from 'react'
-import { isVisible } from '@testing-library/user-event/dist/utils'
-
-interface GalleryItem {
-  type: 'image' | 'video'
-  url: string
-}
 
 const mock: GalleryItem[] = [
   {

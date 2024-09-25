@@ -1,105 +1,51 @@
 import ProductList from '../../components/ProductsList'
-import Game from '../../models/Game'
 import resident from '../../assets/images/resident.png'
 import diablo from '../../assets/images/diablo.png'
 import starWars from '../../assets/images/star_wars.png'
 import zelda from '../../assets/images/zelda.png'
 import streetFighter6 from '../../assets/images/streetFighter6.png'
 import fifa23 from '../../assets/images/fifa23.png'
+import { Game } from '../Home'
+import { useEffect, useState } from 'react'
 
-const promocoes: Game[] = [
-  {
-    id: 1,
-    category: 'Ação',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    title: 'Resident Evil 4 - Remake',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: resident
-  },
-  {
-    id: 2,
-    category: 'Ação',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    title: 'Resident Evil 4 - Remake',
-    system: 'PS5',
-    infos: ['5%', 'R$ 290,00'],
-    image: resident
-  },
-  {
-    id: 3,
-    category: 'Esport',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    title: 'Resident Evil 4 - Remake',
-    system: 'Windows',
-    infos: ['10%', 'R$ 250,00'],
-    image: fifa23
-  },
-  {
-    id: 4,
-    category: 'Esporte',
-    description:
-      'Resident Evil 4, conhecido no Japão como Biohazard 4, é um jogo eletrônico de survival horror...',
-    title: 'Resident Evil 4 - Remake',
-    system: 'PS5',
-    infos: ['10%', 'R$ 250,00'],
-    image: fifa23
-  }
-]
+const Categories = () => {
+  const [gamesAcao, setGamesAcao] = useState<Game[]>([])
+  const [gamesEsportes, setGamesEsportes] = useState<Game[]>([])
+  const [gamesSimulacao, setGamesSimulacao] = useState<Game[]>([])
+  const [gamesLuta, setGamesLuta] = useState<Game[]>([])
+  const [gamesRpg, setGamesRpg] = useState<Game[]>([])
 
-const emBreve: Game[] = [
-  {
-    id: 5,
-    category: 'RPG',
-    description:
-      'Diablo IV é um RPG de ação em desenvolvimento pela Blizzard Entertainment.',
-    title: 'Diablo 4',
-    system: 'Windows',
-    infos: ['07/10'],
-    image: diablo
-  },
-  {
-    id: 6,
-    category: 'Aventura',
-    description:
-      'Star Wars Jedi: Survivor é um próximo jogo de ação e aventura desenvolvido pela Respawn...',
-    title: 'Star Wars Jedi Survivor',
-    system: 'Windows',
-    infos: ['11/11'],
-    image: starWars
-  },
-  {
-    id: 7,
-    category: 'Luta',
-    description:
-      'Street Fighter 6 é um próximo jogo de luta desenvolvido e publicado pela Capcom.',
-    title: 'Street Fighter 6',
-    system: 'Windows',
-    infos: ['09/12'],
-    image: streetFighter6
-  },
-  {
-    id: 8,
-    category: 'RPG',
-    description:
-      'Uma aventura épica pela terra e pelos céus de Hyrule aguarda em The Legend of Zelda™...',
-    title: 'The Legend of Zelda - TOK',
-    system: 'Switch',
-    infos: ['07/11'],
-    image: zelda
-  }
-]
+  useEffect(() => {
+    fetch('https://fake-api-tau.vercel.app/api/eplay/acao')
+      .then((resp) => resp.json())
+      .then((resp) => setGamesAcao(resp))
 
-const Categories = () => (
-  <>
-    <ProductList games={promocoes} title="RPG" background="gray" />
-    <ProductList games={emBreve} title="Ação" background="black" />
-    <ProductList games={promocoes} title="Aventura" background="gray" />
-    <ProductList games={emBreve} title="FPS" background="black" />
-  </>
-)
+    fetch('https://fake-api-tau.vercel.app/api/eplay/esportes')
+      .then((resp) => resp.json())
+      .then((resp) => setGamesEsportes(resp))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/simulacao')
+      .then((resp) => resp.json())
+      .then((resp) => setGamesSimulacao(resp))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/luta')
+      .then((resp) => resp.json())
+      .then((resp) => setGamesLuta(resp))
+
+    fetch('https://fake-api-tau.vercel.app/api/eplay/rpg')
+      .then((resp) => resp.json())
+      .then((resp) => setGamesRpg(resp))
+  }, [])
+
+  return (
+    <>
+      <ProductList games={gamesAcao} title="Ação" background="gray" />
+      <ProductList games={gamesEsportes} title="Esportes" background="black" />
+      <ProductList games={gamesLuta} title="Luta" background="gray" />
+      <ProductList games={gamesRpg} title="RPG" background="black" />
+      <ProductList games={gamesSimulacao} title="Simulacao" background="gray" />
+    </>
+  )
+}
 
 export default Categories
