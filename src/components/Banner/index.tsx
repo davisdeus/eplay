@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react'
-import bannerImg from '../../assets/images/banner-homem-aranha.png'
 import Button from '../Button'
 import Tag from '../Tag'
 import { Image, Precos, Titulo } from './style'
-import { Game } from '../../pages/Home'
 import { formatPreco } from '../ProductsList'
+import { useGetJogoEmDestaqueQuery } from '../../services/api'
 
 const Banner = () => {
-  const [game, setGame] = useState<Game>()
-
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/destaque')
-      .then((resp) => resp.json())
-      .then((resp) => setGame(resp))
-  }, [])
+  const { data: game, isLoading } = useGetJogoEmDestaqueQuery()
 
   if (!game) {
     return <h3>Carregando...</h3>
@@ -34,7 +26,7 @@ const Banner = () => {
 
         <Button
           type="link"
-          to="/produto"
+          to={`/product/${game.id}`}
           title="Clique para aproveitar essa oferta"
         >
           Aproveitar

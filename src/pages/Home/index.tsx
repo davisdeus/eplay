@@ -1,14 +1,9 @@
-import { useEffect, useState } from 'react'
-
 import Banner from '../../components/Banner'
 import ProductList from '../../components/ProductsList'
-
-import resident from '../../assets/images/resident.png'
-import diablo from '../../assets/images/diablo.png'
-import starWars from '../../assets/images/star_wars.png'
-import zelda from '../../assets/images/zelda.png'
-import streetFighter6 from '../../assets/images/streetFighter6.png'
-import fifa23 from '../../assets/images/fifa23.png'
+import {
+  useGetJogosPromocoesQuery,
+  useGetJogosEmBreveQuery
+} from '../../services/api'
 
 export interface GalleryItem {
   type: 'image' | 'video'
@@ -40,28 +35,23 @@ export type Game = {
 }
 
 const Home = () => {
-  const [promocoes, setPromocoes] = useState<Game[]>([])
-  const [emBreve, setEmBreve] = useState<Game[]>([])
+  const { data: JogosPromocoes } = useGetJogosPromocoesQuery()
+  const { data: JogosEmBreve } = useGetJogosEmBreveQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/promocoes')
-      .then((resp) => resp.json())
-      .then((resp) => setPromocoes(resp))
-  }, [])
-
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/eplay/em-breve')
-      .then((resp) => resp.json())
-      .then((resp) => setEmBreve(resp))
-  }, [])
-
-  return (
-    <>
-      <Banner />
-      <ProductList games={promocoes} title="Promoçôes" background="gray" />
-      <ProductList games={emBreve} title="Em breve" background="black" />
-    </>
-  )
+  if (JogosPromocoes && JogosEmBreve) {
+    return (
+      <>
+        <Banner />
+        <ProductList
+          games={JogosPromocoes}
+          title="Promoçôes"
+          background="gray"
+        />
+        <ProductList games={JogosEmBreve} title="Em breve" background="black" />
+      </>
+    )
+  }
+  return <h4>Carregando....</h4>
 }
 
 export default Home
